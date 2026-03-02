@@ -1,6 +1,7 @@
 # Deno CI Workflow
 
-A reusable GitHub Actions workflow for Deno projects that provides complete CI/CD automation including testing, publishing to JSR and NPM, and creating GitHub releases.
+A reusable GitHub Actions workflow for Deno projects that provides complete CI/CD automation including testing,
+publishing to JSR and NPM, and creating GitHub releases.
 
 ## Features
 
@@ -12,7 +13,8 @@ A reusable GitHub Actions workflow for Deno projects that provides complete CI/C
 
 ## Usage
 
-To use this reusable workflow in your Deno project, create a workflow file in your repository at `.github/workflows/ci.yml`:
+To use this reusable workflow in your Deno project, create a workflow file in your repository at
+`.github/workflows/ci.yml`:
 
 ```yaml
 name: CI
@@ -32,17 +34,17 @@ Replace `quentinadam/deno-ci-workflow` with the actual repository path where thi
 
 ## Inputs
 
-| Input | Description | Required | Default |
-|-------|-------------|----------|---------|
-| `deno-version` | Deno version to use | No | `v2.x` |
-| `node-version` | Node.js version for NPM publishing | No | `24.x` |
-| `skip-jsr` | Skip JSR publishing | No | `false` |
-| `skip-npm` | Skip NPM publishing | No | `false` |
+| Input          | Description                        | Required | Default |
+| -------------- | ---------------------------------- | -------- | ------- |
+| `deno-version` | Deno version to use                | No       | `v2.x`  |
+| `node-version` | Node.js version for NPM publishing | No       | `24.x`  |
+| `skip-jsr`     | Skip JSR publishing                | No       | `false` |
+| `skip-npm`     | Skip NPM publishing                | No       | `false` |
 
 ## Secrets
 
-| Secret | Description | Required |
-|--------|-------------|----------|
+| Secret      | Description              | Required                  |
+| ----------- | ------------------------ | ------------------------- |
 | `NPM_TOKEN` | NPM token for publishing | Only if publishing to NPM |
 
 ## Examples
