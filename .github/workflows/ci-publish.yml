@@ -144,7 +144,7 @@ jobs:
         with:
           deno-version: ${{ inputs.deno-version }}
       - name: Generate jsr.json
-        uses: ./.github/actions/generate-manifest
+        uses: quentinadam/deno-ci-workflow/.github/actions/generate-manifest@v1
         with:
           type: jsr
           output_file: jsr.json
@@ -163,7 +163,7 @@ jobs:
         with:
           deno-version: ${{ inputs.deno-version }}
       - name: Generate package.json
-        uses: ./.github/actions/generate-manifest
+        uses: quentinadam/deno-ci-workflow/.github/actions/generate-manifest@v1
         with:
           type: npm
           output_file: package.json
@@ -283,7 +283,7 @@ jobs:
         with:
           deno-version: ${{ inputs.deno-version }}
       - name: Generate jsr.json
-        uses: ./.github/actions/generate-manifest
+        uses: quentinadam/deno-ci-workflow/.github/actions/generate-manifest@v1
         with:
           type: jsr
           output_file: jsr.json
@@ -308,7 +308,7 @@ jobs:
         with:
           deno-version: ${{ inputs.deno-version }}
       - name: Generate package.json
-        uses: ./.github/actions/generate-manifest
+        uses: quentinadam/deno-ci-workflow/.github/actions/generate-manifest@v1
         with:
           type: npm
           output_file: package.json
