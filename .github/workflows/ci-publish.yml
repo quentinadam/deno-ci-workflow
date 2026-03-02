@@ -82,7 +82,7 @@ jobs:
   check_jsr_exists:
     name: Check if package exists on JSR
     needs: package_metadata
-    if: !inputs.skip-jsr
+    if: inputs.skip-jsr == false
     outputs:
       exists: ${{ steps.check_jsr_exists.outputs.exists }}
     runs-on: ubuntu-latest
@@ -108,7 +108,7 @@ jobs:
   check_npm_exists:
     name: Check if package exists on NPM
     needs: package_metadata
-    if: !inputs.skip-npm
+    if: inputs.skip-npm == false
     outputs:
       exists: ${{ steps.check_npm_exists.outputs.exists }}
     runs-on: ubuntu-latest
@@ -268,7 +268,7 @@ jobs:
     name: Publish to JSR
     needs: [check_jsr_exists, resolve_tag_commit]
     if: |
-      !inputs.skip-jsr &&
+      inputs.skip-jsr == false &&
       needs.check_jsr_exists.outputs.exists == 'false' &&
       needs.resolve_tag_commit.outputs.sha == github.sha
     runs-on: ubuntu-latest
@@ -293,7 +293,7 @@ jobs:
     name: Publish to NPM
     needs: [check_npm_exists, resolve_tag_commit]
     if: |
-      !inputs.skip-npm &&
+      inputs.skip-npm == false &&
       needs.check_npm_exists.outputs.exists == 'false' &&
       needs.resolve_tag_commit.outputs.sha == github.sha
     runs-on: ubuntu-latest
