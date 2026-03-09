@@ -217,7 +217,11 @@ jobs:
   create_github_release:
     name: Create GitHub release
     needs: [check_github_release_exists, package_metadata]
-    if: needs.check_github_release_exists.outputs.exists == 'false'
+    if: |
+      always() &&
+      needs.check_github_release_exists.result == 'success' &&
+      needs.package_metadata.result == 'success' &&
+      needs.check_github_release_exists.outputs.exists == 'false'
     runs-on: ubuntu-latest
     permissions:
       contents: write
