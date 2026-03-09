@@ -272,8 +272,11 @@ jobs:
     name: Publish to JSR
     needs: [check_jsr_exists, resolve_tag_commit]
     if: |
+      always() &&
       inputs.skip-jsr == false &&
+      needs.check_jsr_exists.result == 'success' &&
       needs.check_jsr_exists.outputs.exists == 'false' &&
+      needs.resolve_tag_commit.result == 'success' &&
       needs.resolve_tag_commit.outputs.sha == github.sha
     runs-on: ubuntu-latest
     permissions:
@@ -297,8 +300,11 @@ jobs:
     name: Publish to NPM
     needs: [check_npm_exists, resolve_tag_commit]
     if: |
+      always() &&
       inputs.skip-npm == false &&
+      needs.check_npm_exists.result == 'success' &&
       needs.check_npm_exists.outputs.exists == 'false' &&
+      needs.resolve_tag_commit.result == 'success' &&
       needs.resolve_tag_commit.outputs.sha == github.sha
     runs-on: ubuntu-latest
     permissions:
