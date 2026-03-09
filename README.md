@@ -26,11 +26,17 @@ on:
 jobs:
   ci-and-publish:
     uses: quentinadam/deno-ci-workflow/.github/workflows/ci-publish.yml@main
+    permissions:
+      contents: write
+      id-token: write
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
 
 Replace `quentinadam/deno-ci-workflow` with the actual repository path where this workflow is published.
+
+**Note**: The `permissions` section is required to allow the workflow to create GitHub releases (`contents: write`) and
+publish to JSR and NPM registries using OIDC authentication (`id-token: write`).
 
 ## Inputs
 
@@ -43,9 +49,9 @@ Replace `quentinadam/deno-ci-workflow` with the actual repository path where thi
 
 ## Secrets
 
-| Secret      | Description              | Required                  |
-| ----------- | ------------------------ | ------------------------- |
-| `NPM_TOKEN` | NPM token for publishing | Only if publishing to NPM |
+| Secret      | Description              | Required                                                    |
+| ----------- | ------------------------ | ----------------------------------------------------------- |
+| `NPM_TOKEN` | NPM token for publishing | Only if publishing to NPM and not using OIDC authentication |
 
 ## Examples
 
@@ -61,6 +67,9 @@ on:
 jobs:
   ci-and-publish:
     uses: quentinadam/deno-ci-workflow/.github/workflows/ci-publish.yml@main
+    permissions:
+      contents: write
+      id-token: write
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
@@ -80,6 +89,9 @@ jobs:
     with:
       deno-version: v2.1.0
       node-version: '22.x'
+    permissions:
+      contents: write
+      id-token: write
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
@@ -98,6 +110,9 @@ jobs:
     uses: quentinadam/deno-ci-workflow/.github/workflows/ci-publish.yml@main
     with:
       skip-npm: true
+    permissions:
+      contents: write
+      id-token: write
 ```
 
 ### NPM Only (Skip JSR)
@@ -114,6 +129,9 @@ jobs:
     uses: quentinadam/deno-ci-workflow/.github/workflows/ci-publish.yml@main
     with:
       skip-jsr: true
+    permissions:
+      contents: write
+      id-token: write
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
@@ -130,13 +148,15 @@ For this workflow to function correctly, your repository must:
    }
    ```
 
-2. **Configure repository permissions** for publishing:
-   - JSR: Ensure your repository has the necessary permissions for JSR publishing
-   - NPM: Add an `NPM_TOKEN` secret to your repository settings
+2. **Configure publishing authentication**:
+   - JSR: Uses OIDC authentication via `id-token: write` permission (no secret needed)
+   - NPM: Either use OIDC authentication (via `id-token: write` permission) or add an `NPM_TOKEN` secret to your
+     repository settings
 
-3. **Grant workflow permissions**:
-   - Go to your repository Settings → Actions → General
-   - Under "Workflow permissions", ensure workflows have permission to create releases
+3. **Grant workflow permissions** in your workflow file:
+   - Add `contents: write` permission to allow creating GitHub releases
+   - Add `id-token: write` permission to enable OIDC authentication for publishing to JSR and NPM registries
+   - These permissions should be specified in the `permissions` section of your workflow (see examples above)
 
 ## Workflow Behavior
 
